@@ -53,7 +53,7 @@ class Module:
             for name, param in module._parameters.items():
                 yield (prefix+name, param)
             for name, module in module._modules.items():
-                yield from _named_parameters(module, prefix + name + "_")
+                yield from _named_parameters(module, prefix + name + ".")
         
         return list(_named_parameters(self))
 

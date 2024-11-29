@@ -133,13 +133,13 @@ def is_close(x: float, y: float) -> bool:
         y: float
 
     Returns:
-        result of x-y < 1e-25
+        result of x-y < 1e-2
         
     """
     return lt(
         abs(
             add(x, neg(y))
-        ), 1e-25)
+        ), 1e-2)
 
 def sigmoid(x: float) -> float:
     """Calculates the sigmoid function
@@ -326,7 +326,7 @@ def zipWith(func: Callable[[Any, Any], Any]) -> Callable[[Iterable[Any], Iterabl
 
     return apply
 
-def reduce(func: Callable[[Any, Any], Any]) -> Callable[[Iterable[Any]], Any]:
+def reduce(func: Callable[[Any, Any], Any], base: Any) -> Callable[[Iterable[Any]], Any]:
     """Higher order function that reduces an iterable to a single value using a given function
 
     Args:
@@ -339,7 +339,7 @@ def reduce(func: Callable[[Any, Any], Any]) -> Callable[[Iterable[Any]], Any]:
     """
     def apply(ls: Iterable[Any]) -> Any:
         it = iter(ls)
-        ret = next(it)
+        ret = base
 
         for element in it:
             ret = func(ret, element)
@@ -383,7 +383,7 @@ def sum(iterable: Iterable[float]) -> float:
         sum of all values in arr
     
     """
-    return reduce(add)(iterable)
+    return reduce(add, 0)(iterable)
 
 def prod(iterable: Iterable[float]) -> float:
     """Calculate product of all elements in a list using reduce
@@ -395,4 +395,4 @@ def prod(iterable: Iterable[float]) -> float:
         product of all values in arr
     
     """
-    return reduce(mul)(iterable)
+    return reduce(mul, 1)(iterable)

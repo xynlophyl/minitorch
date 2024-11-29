@@ -108,10 +108,10 @@ def test_sigmoid(a: float) -> None:
     * It is  strictly increasing.
     """
     # TODO: Implement for Task 0.2.
-    assert 0 < sigmoid(a) < 1
-    assert eq(sigmoid(neg(a)), sigmoid(a))
-    assert eq(sigmoid(0.5), 0)
-    assert lt(sigmoid(a), sigmoid(a+1.0))
+    assert 0 <= sigmoid(a) <= 1
+    assert_close(sigmoid(neg(a)), 1-sigmoid(a))
+    assert_close(sigmoid(0), 0.5)
+    assert lt(sigmoid(a), sigmoid(a+1.0)) or eq(sigmoid(a), sigmoid(a+1.0))
 
 
 @pytest.mark.task0_2
@@ -119,7 +119,7 @@ def test_sigmoid(a: float) -> None:
 def test_transitive(a: float, b: float, c: float) -> None:
     """Test the transitive property of less-than (a < b and b < c implies a < c)"""
     # TODO: Implement for Task 0.2.
-    assert lt(a, b) and lt(b,c) and lt(a,c)
+    assert not (lt(a, b) and lt(b,c)) or lt(a,c)
 
 
 @pytest.mark.task0_2
@@ -139,9 +139,9 @@ def test_distribute(x: float, y: float, z: float) -> None:
     :math:`z \times (x + y) = z \times x + z \times y`
     """
     # TODO: Implement for Task 0.2.
-    assert eq(
+    assert_close(
         mul(z, add(x,y)),
-        add(mul(z,x), mul(z,y))
+        add(mul(z, x), mul(z, y)) 
     )
 
 
@@ -178,12 +178,20 @@ def test_sum_distribute(ls1: List[float], ls2: List[float]) -> None:
     is the same as the sum of each element of `ls1` plus each element of `ls2`.
     """
     # TODO: Implement for Task 0.3.
-    raise NotImplementedError("Need to implement for Task 0.3")
+    assert_close(
+        add(
+            sum(ls1), sum(ls2) 
+        ),
+        sum(
+            addLists(ls1, ls2)
+        )
+    )
 
 
 @pytest.mark.task0_3
 @given(lists(small_floats))
 def test_sum(ls: List[float]) -> None:
+    print(sum(ls), minitorch.operators.sum(ls), minitorch.operators.sum(ls) - sum(ls))
     assert_close(sum(ls), minitorch.operators.sum(ls))
 
 
