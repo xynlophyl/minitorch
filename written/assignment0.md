@@ -6,7 +6,7 @@
 * Overview: https://minitorch.github.io/module0/module0/
 
 ### Linear Classifier plot
-![linear_classifier_plot](./assets/linear_classifier_plot.png)
+![linear_classifier_plot](../assets/linear_classifier_plot.png)
 
 Parameters used:
 - linear_weight_0_0 = -3.48
